@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: load-data-service
+  batch:
+    jdbc:
+      initialize-schema: always # Metadata tables will be created in the public schema
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        default_schema: load-data-service # Application tables will use this schema
+        jdbc:
+          batch_size: 1000
+        order_inserts: true
+        order_updates: true
+  flyway:
+    enabled: true
+    schemas: load-data-service # Flyway migrations will target this schema
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+app:
+  input-folder: input-data/
