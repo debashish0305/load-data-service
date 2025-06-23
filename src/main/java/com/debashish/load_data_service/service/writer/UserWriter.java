@@ -7,10 +7,10 @@ import org.springframework.batch.item.ItemWriter;
 
 @Slf4j
 public class UserWriter implements ItemWriter<User> {
-    @Override
-    public void write(Chunk<? extends User> items) {
-        for (User item : items) {
-            log.info("Writing item: {}", item);
-        }
-    }
+	@Override
+	public void write(Chunk<? extends User> items) {
+		for (User item : items) {
+			log.info("Writing item: {}", item);
+		}
+	}
 }

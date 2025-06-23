@@ -7,10 +7,10 @@ import org.springframework.batch.item.ItemWriter;
 
 @Slf4j
 public class ProductWriter implements ItemWriter<Product> {
-    @Override
-    public void write(Chunk<? extends Product> items) {
-        for (Product item : items) {
-            log.info("Writing item: {}", item);
-        }
-    }
+	@Override
+	public void write(Chunk<? extends Product> items) {
+		for (Product item : items) {
+			log.info("Writing item: {}", item);
+		}
+	}
 }

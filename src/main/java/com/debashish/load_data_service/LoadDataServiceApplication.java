@@ -1,21 +1,21 @@
 package com.debashish.load_data_service;
 
-import com.debashish.load_data_service.config.AppProperties;
-import com.debashish.load_data_service.model.CsvInputFileType;
-import com.debashish.load_data_service.service.BatchJobRunner;
 import com.debashish.load_data_service.utils.CommandLineArgsUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.util.StringUtils;
 
-import static com.debashish.load_data_service.constants.Constants.*;
+import java.util.Map;
+
+import static com.debashish.load_data_service.utils.CommandLineArgsUtil.getStepBeanName;
 
 @Slf4j
 @SpringBootApplication
@@ -23,31 +23,46 @@ import static com.debashish.load_data_service.constants.Constants.*;
 @RequiredArgsConstructor
 public class LoadDataServiceApplication implements CommandLineRunner {
 
-    private final BatchJobRunner batchJobRunner;
-    private final AppProperties appProperties;
+	private final JobLauncher jobLauncher;
+	private final JobRepository jobRepository;
+	private final Map<String, Step> stepBeans; // Injects all steps by bean name
 
-    public static void main(String[] args) {
-        SpringApplication.run(LoadDataServiceApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(LoadDataServiceApplication.class, args);
+	}
 
-    @Override
-    public void run(String... args) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-        if (args.length < 1) {
-            log.info("Please provide --job.type=USERS|ORDERS|PRODUCTS");
-            return;
-        }
+	@Override
+	public void run(String... args) {
+		if (args == null || args.length == 0) {
+			log.error("Missing required argument: --job.type=USERS|ORDERS|PRODUCTS");
+			return;
+		}
 
-        String jobTypeArg = CommandLineArgsUtil.getArgValue(args, "job.type"); // ex: "job.type=USERS"
-        CsvInputFileType jobType = CsvInputFileType.valueOf(jobTypeArg.toUpperCase());
+		String jobType = CommandLineArgsUtil.getArgValue(args, "job.type");
+		if (!StringUtils.hasText(jobType)) {
+			log.error("Invalid or missing job.type argument.");
+			return;
+		}
 
-        String fileName = switch (jobType) {
-            case USERS -> USERS_CSV_FILE;
-            case ORDERS -> ORDERS_CSV_FILE;
-            case PRODUCTS -> PRODUCTS_CSV_FILE;
-        };
+		String stepBeanName = getStepBeanName(jobType);
+		Step step = stepBeans.get(stepBeanName);
+		if (step == null) {
+			log.error("No step bean found for job type: {}", jobType);
+			return;
+		}
 
+		Job job = new JobBuilder("job-" + jobType, jobRepository).start(step).build();
 
-        // execute the job with the provided job type and input folder
-        batchJobRunner.runJob(jobType, appProperties.getInputFolder(), fileName);
-    }
+		JobParameters jobParameters = new JobParametersBuilder().addString("jobType", jobType)
+				.addLong("runTime", System.currentTimeMillis()).toJobParameters();
+
+		try {
+			log.info("Starting job: {} with parameters: {}", job.getName(), jobParameters);
+			JobExecution execution = jobLauncher.run(job, jobParameters);
+			log.info("Job {} finished with status: {}", job.getName(), execution.getStatus());
+		} catch (Exception e) {
+			log.error("Job execution failed for job type: {}", jobType, e);
+		}
+	}
+
 }
