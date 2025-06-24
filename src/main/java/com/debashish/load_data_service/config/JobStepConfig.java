@@ -28,10 +28,6 @@ public class JobStepConfig {
 	@Value("${app.input-folder}")
 	private String inputFolder;
 
-	static final String[] ORDER_COLUMNS = {"id", "name", "value"};
-	static final String[] USER_COLUMNS = {"id", "name", "value"};
-	static final String[] PRODUCT_COLUMNS = {"id", "name", "value"};
-
 	@Bean(BEAN_USER_STEP)
 	public Step userStep(JobRepository jobRepository, PlatformTransactionManager txManager, UserProcessor userProcessor,
 			UserWriter userWriter) {

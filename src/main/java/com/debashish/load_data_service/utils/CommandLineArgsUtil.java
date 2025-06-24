@@ -17,6 +17,9 @@ public class CommandLineArgsUtil {
 		throw new IllegalArgumentException("Missing required argument: " + prefix + "<value>");
 	}
 
+	/*
+	 * Bean names for different job types
+	 */
 	public static String getStepBeanName(String jobTypeArg) {
 		return switch (jobTypeArg.toUpperCase()) {
 			case "USERS" -> BEAN_USER_STEP;

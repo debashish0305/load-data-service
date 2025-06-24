@@ -1,31 +1,6 @@
-id,name,value
-1,Order #001,Pending
-2,Order #002,Shipped
-3,Order #003,Delivered
-4,Order #004,Cancelled
-5,Order #005,Returned
-6,Order #006,Pending
-7,Order #007,Delivered
-8,Order #008,Shipped
-9,Order #009,Processing
-10,Order #010,Delivered
-11,Order #011,Pending
-12,Order #012,Cancelled
-13,Order #013,Delivered
-14,Order #014,Returned
-15,Order #015,Pending
-16,Order #016,Shipped
-17,Order #017,Delivered
-18,Order #018,Pending
-19,Order #019,Processing
-20,Order #020,Shipped
-21,Order #021,Pending
-22,Order #022,Cancelled
-23,Order #023,Delivered
-24,Order #024,Returned
-25,Order #025,Processing
-26,Order #026,Delivered
-27,Order #027,Shipped
-28,Order #028,Cancelled
-29,Order #029,Returned
-30,Order #030,Delivered
+id,name,value,customer,product,quantity,price,discount,shippingAddress,billingAddress,orderDate,deliveryDate,paymentStatus
+1,Order #001,Pending,John Doe,Widget,2,19.99,0.00,123 Main St,456 Elm St,2024-06-01,2024-06-05,Paid
+2,Order #002,Shipped,Jane Smith,Gadget,1,29.99,5.00,789 Oak St,321 Pine St,2024-06-02,2024-06-06,Pending
+3,Order #003,Delivered,Bob Lee,Widget,3,19.99,0.00,123 Main St,456 Elm St,2024-06-03,2024-06-07,Paid
+4,Order #004,Cancelled,Alice Kim,Thing,5,9.99,2.00,654 Maple St,987 Cedar St,2024-06-04,2024-06-08,Refunded
+5,Order #005,Returned,Tom Fox,Widget,2,19.99,0.00,123 Main St,456 Elm St,2024-06-05,2024-06-09,Refunded

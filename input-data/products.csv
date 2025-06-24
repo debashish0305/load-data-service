@@ -1,31 +1,21 @@
-id,name,value
-1,Keyboard,24.99
-2,Mouse,15.49
-3,Monitor,199.99
-4,Laptop,799.00
-5,Printer,120.00
-6,USB Drive,10.00
-7,Webcam,35.00
-8,Desk,150.00
-9,Chair,85.00
-10,Notebook,5.99
-11,Pencil,1.99
-12,Earphones,25.00
-13,Tablet,250.00
-14,Smartphone,699.99
-15,Speaker,45.00
-16,Charger,20.00
-17,Router,55.00
-18,Switch,40.00
-19,Graphics Card,299.99
-20,Hard Drive,95.00
-21,SSD,120.00
-22,Power Bank,30.00
-23,Projector,350.00
-24,Scanner,130.00
-25,Camera,400.00
-26,Pen Drive,14.00
-27,Trackpad,70.00
-28,Microphone,65.00
-29,Cooling Pad,20.00
-30,Flashlight,12.00
+id,name,value,category,brand,modelNumber,warranty,color,weight,dimensions,stock,rating,releaseDate,material,origin,barcode,energyClass,connectivity,features,notes
+1,Keyboard,24.99,Electronics,Logitech,K120,1 year,Black,0.5kg,45x15x3cm,120,4.5,2022-01-10,Plastic,China,1234567890123,A,USB,Silent keys,Standard model
+2,Mouse,15.49,Electronics,HP,M100,6 months,Grey,0.1kg,10x6x4cm,200,4.2,2021-11-05,Plastic,China,1234567890124,B,USB,Optical,Compact design
+3,Monitor,199.99,Electronics,Dell,P2419H,3 years,Black,3.2kg,54x32x5cm,50,4.7,2023-02-15,Plastic,China,1234567890125,A,HDMI,IPS panel,Full HD
+4,Laptop,799.00,Computers,Lenovo,ThinkPad E14,2 years,Black,1.7kg,32x22x2cm,30,4.8,2023-05-20,Aluminum,China,1234567890126,A,WiFi,Bluetooth,14 inch
+5,Printer,120.00,Electronics,Canon,PIXMA G2010,1 year,White,5.5kg,44x33x16cm,40,4.3,2022-09-12,Plastic,Japan,1234567890127,B,USB,Inkjet,All-in-one
+6,USB Drive,10.00,Accessories,SanDisk,CZ50,5 years,Red,0.02kg,6x2x1cm,500,4.6,2021-07-18,Plastic,Malaysia,1234567890128,A,USB,16GB,Portable
+7,Webcam,35.00,Electronics,Logitech,C270,2 years,Black,0.08kg,7x4x4cm,80,4.4,2022-03-22,Plastic,China,1234567890129,B,USB,HD video,Clip-on
+8,Desk,150.00,Furniture,Ikea,LINNMON,10 years,White,18kg,120x60x75cm,15,4.1,2020-10-01,Wood,Sweden,1234567890130,C,None,Adjustable,Home office
+9,Chair,85.00,Furniture,Herman Miller,Aeron,12 years,Black,13kg,65x65x100cm,25,4.9,2021-12-11,Mesh,USA,1234567890131,C,None,Ergonomic,Premium
+10,Notebook,5.99,Stationery,Classmate,NB100,No,Blue,0.3kg,21x15x1cm,300,4.0,2022-08-08,Paper,India,1234567890132,D,None,Ruled,School use
+11,Pencil,1.99,Stationery,Faber-Castell,FC9000,No,Green,0.02kg,18x0.7x0.7cm,1000,4.3,2021-06-15,Wood,Germany,1234567890133,D,None,HB,Drawing
+12,Earphones,25.00,Electronics,Boat,BassHeads 100,1 year,Black,0.05kg,12x2x2cm,150,4.2,2023-01-25,Plastic,India,1234567890134,B,3.5mm,Mic,In-ear
+13,Tablet,250.00,Electronics,Samsung,Tab A7,2 years,Silver,0.5kg,25x16x0.7cm,60,4.5,2022-04-30,Metal,Korea,1234567890135,A,WiFi,Touchscreen,Android
+14,Smartphone,699.99,Electronics,Apple,iPhone 13,1 year,Blue,0.17kg,14x7x0.8cm,45,4.9,2023-09-14,Glass,China,1234567890136,A,5G,Face ID,Flagship
+15,Speaker,45.00,Electronics,JBL,GO2,1 year,Red,0.18kg,8x7x3cm,90,4.6,2022-12-19,Plastic,China,1234567890137,B,Bluetooth,Waterproof,Portable
+16,Charger,20.00,Accessories,Anker,A2021,2 years,White,0.07kg,6x4x3cm,180,4.7,2021-03-10,Plastic,China,1234567890138,A,USB,Fast charge,Universal
+17,Router,55.00,Electronics,TP-Link,Archer C6,3 years,Black,0.4kg,23x14x3cm,70,4.4,2022-07-07,Plastic,China,1234567890139,A,WiFi,4 antennas,Home use
+18,Switch,40.00,Electronics,D-Link,DES-108,2 years,Grey,0.3kg,15x9x3cm,60,4.3,2021-05-16,Metal,Taiwan,1234567890140,B,LAN,8 ports,Unmanaged
+19,Graphics Card,299.99,Electronics,NVIDIA,GTX 1660,3 years,Black,0.8kg,22x11x4cm,20,4.8,2023-06-21,Metal,China,1234567890141,A,PCIe,6GB GDDR5,Gaming
+20,Hard Drive,95.00,Electronics,Seagate,Barracuda,2 years,Silver,0.6kg,14x10x2cm,100,4.5,2022-11-30,Metal,Thailand,1234567890142,B,SATA,1TB,Desktop
