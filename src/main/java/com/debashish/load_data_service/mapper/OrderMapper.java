@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-	@Mapping(source = "id", target = "orderId")
+	@Mapping(source = "orderId", target = "orderId")
 	OrderEntity toEntity(Order order);
 
-	@Mapping(source = "orderId", target = "id")
+	@Mapping(source = "orderId", target = "orderId")
 	Order toModel(OrderEntity entity);
 }

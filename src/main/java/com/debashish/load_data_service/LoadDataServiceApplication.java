@@ -1,5 +1,6 @@
 package com.debashish.load_data_service;
 
+import com.debashish.load_data_service.config.LogExecutionTime;
 import com.debashish.load_data_service.utils.CommandLineArgsUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class LoadDataServiceApplication implements CommandLineRunner {
 		SpringApplication.run(LoadDataServiceApplication.class, args);
 	}
 
+	@LogExecutionTime
 	@Override
 	public void run(String... args) {
 		if (args == null || args.length == 0) {

@@ -1,1 +1,1 @@
-CREATE SCHEMA IF NOT EXISTS "load-data-service";
+CREATE SCHEMA IF NOT EXISTS "load_data_service";
