@@ -1,0 +1,33 @@
+@SpringBootTest
+@Testcontainers
+@ActiveProfiles("test")  // optional but clean
+public class BatchIntegrationTest {
+
+    @Container
+    static OracleContainer readerDb = new OracleContainer("gvenzl/oracle-xe:21-slim")
+            .withUsername("test")
+            .withPassword("test");
+
+    @Container
+    static OracleContainer writerDb = new OracleContainer("gvenzl/oracle-xe:21-slim")
+            .withUsername("test")
+            .withPassword("test");
+
+    @DynamicPropertySource
+    static void overrideProps(DynamicPropertyRegistry registry) {
+        // Reader DB
+        registry.add("spring.datasource.reader.url", readerDb::getJdbcUrl);
+        registry.add("spring.datasource.reader.username", readerDb::getUsername);
+        registry.add("spring.datasource.reader.password", readerDb::getPassword);
+        registry.add("spring.datasource.reader.driver-class-name", readerDb::getDriverClassName);
+
+        // Writer DB
+        registry.add("spring.datasource.writer.url", writerDb::getJdbcUrl);
+        registry.add("spring.datasource.writer.username", writerDb::getUsername);
+        registry.add("spring.datasource.writer.password", writerDb::getPassword);
+        registry.add("spring.datasource.writer.driver-class-name", writerDb::getDriverClassName);
+    }
+
+    // autowire your JobLauncher, Job, JdbcTemplates, etc.
+
+}
