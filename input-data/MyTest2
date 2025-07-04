@@ -1,0 +1,73 @@
+@SpringBootTest
+@Testcontainers
+@DirtiesContext
+class BatchJobIntegrationTest {
+
+    @Container
+    static OracleContainer readerDb = new OracleContainer("gvenzl/oracle-xe:21-slim")
+            .withUsername("test")
+            .withPassword("test");
+
+    @Container
+    static OracleContainer writerDb = new OracleContainer("gvenzl/oracle-xe:21-slim")
+            .withUsername("test")
+            .withPassword("test");
+
+    @DynamicPropertySource
+    static void overrideProps(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.reader.url", readerDb::getJdbcUrl);
+        registry.add("spring.datasource.reader.username", readerDb::getUsername);
+        registry.add("spring.datasource.reader.password", readerDb::getPassword);
+        registry.add("spring.datasource.reader.driver-class-name", readerDb::getDriverClassName);
+
+        registry.add("spring.datasource.writer.url", writerDb::getJdbcUrl);
+        registry.add("spring.datasource.writer.username", writerDb::getUsername);
+        registry.add("spring.datasource.writer.password", writerDb::getPassword);
+        registry.add("spring.datasource.writer.driver-class-name", writerDb::getDriverClassName);
+    }
+
+    @Autowired
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private Job job;
+
+    @Test
+    void runBatchJob() throws Exception {
+        JdbcTemplate readerJdbc = new JdbcTemplate(
+                DataSourceBuilder.create()
+                        .url(readerDb.getJdbcUrl())
+                        .username(readerDb.getUsername())
+                        .password(readerDb.getPassword())
+                        .driverClassName(readerDb.getDriverClassName())
+                        .build()
+        );
+
+        JdbcTemplate writerJdbc = new JdbcTemplate(
+                DataSourceBuilder.create()
+                        .url(writerDb.getJdbcUrl())
+                        .username(writerDb.getUsername())
+                        .password(writerDb.getPassword())
+                        .driverClassName(writerDb.getDriverClassName())
+                        .build()
+        );
+
+        // Setup input table and test data
+        readerJdbc.execute("CREATE TABLE input_table (name VARCHAR2(100))");
+        readerJdbc.update("INSERT INTO input_table(name) VALUES ('Debashish')");
+        readerJdbc.update("INSERT INTO input_table(name) VALUES ('ChatGPT')");
+
+        // Setup output table
+        writerJdbc.execute("CREATE TABLE output_table (name VARCHAR2(100))");
+
+        // Run the batch job
+        JobExecution execution = jobLauncher.run(job, new JobParameters());
+        assertEquals(BatchStatus.COMPLETED, execution.getStatus());
+
+        // Verify the output
+        List<String> names = writerJdbc.queryForList("SELECT name FROM output_table", String.class);
+        assertEquals(2, names.size());
+        assertTrue(names.contains("Debashish"));
+        assertTrue(names.contains("ChatGPT"));
+    }
+}
